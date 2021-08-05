@@ -41,7 +41,7 @@ public class TransactionWriter implements ItemWriter<TransactionOPBKPresenter> {
 	public void write(List<? extends TransactionOPBKPresenter> transactions) throws Exception {
 		logger.info("[itemWriter] Iniciando processo de inserção das contas. " + OffsetDateTime.now());
 
-		ExecutorService poolExecutor = Executors.newFixedThreadPool(threadNumber);
+		ExecutorService executor = Executors.newFixedThreadPool(threadNumber);
 		CompletableFuture[] futures = transactions.stream()
 				.map(RealizFuturoPresenter::fromRealizFuturoPresenter)
 				.map(transaction -> CompletableFuture.supplyAsync(() -> transaction))
@@ -54,10 +54,10 @@ public class TransactionWriter implements ItemWriter<TransactionOPBKPresenter> {
 										RefuseTransactionPresenter.toRefuseTransactionPresenter(e.toString(),TABLE_NAME_R_TXN_HIST,applicationName, trans));
 							}
 						}
-						, poolExecutor))
+						, executor))
 				.toArray(CompletableFuture[]::new);
 		CompletableFuture.allOf(futures).join();
-		poolExecutor.shutdown();
+		executor.shutdown();
 		logger.info("[itemWriter] Fim do processo. "+ OffsetDateTime.now());
 
 	}

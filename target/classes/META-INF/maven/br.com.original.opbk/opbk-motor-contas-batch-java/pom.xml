@@ -5,7 +5,7 @@
 
     <groupId>br.com.original.opbk</groupId>
     <artifactId>opbk-motor-contas-batch-java</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.3</version>
     <name>opbk-motor-contas-batch-java</name>
     <description>Batch de historico de transacoes</description>
 
