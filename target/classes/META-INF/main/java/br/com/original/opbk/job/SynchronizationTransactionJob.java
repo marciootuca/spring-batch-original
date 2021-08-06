@@ -6,6 +6,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
@@ -51,9 +52,10 @@ public class SynchronizationTransactionJob {
 
 
 	@Bean
+	@StepScope
 	public TaskExecutor taskExecutor() {
-		SimpleAsyncTaskExecutor simpleAsyncTaskExecutor = new SimpleAsyncTaskExecutor("opbk-transacao-batch");
-		simpleAsyncTaskExecutor.setConcurrencyLimit(1);
+		SimpleAsyncTaskExecutor simpleAsyncTaskExecutor = new SimpleAsyncTaskExecutor("opbk-motor-contas-batch");
+		simpleAsyncTaskExecutor.setConcurrencyLimit(20);
 		return simpleAsyncTaskExecutor;
 	}
 
