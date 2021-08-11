@@ -1,22 +1,17 @@
 package br.com.original.opbk.repository;
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
-
 import br.com.original.fwcl.annotations.OriginalLogger;
 import br.com.original.fwcl.components.logger.OriginalLogLogger;
 import br.com.original.opbk.presenter.RealizFuturoPresenter;
 import br.com.original.opbk.presenter.RefuseTransactionPresenter;
-import br.com.original.opbk.presenter.TransactionOPBKPresenter;
-import br.com.original.opbk.utils.DateUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
+
+import java.sql.Timestamp;
+import java.util.Map;
 
 @Repository
 public class TransactionRepositoryImpl implements TransactionRepository {
@@ -103,5 +98,7 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 	private String getMessage(String error, String sql) {
 		return "Nao foi possivel processar o registro; error=" + error + "; sql=" + sql;
 	}
+
+
 
 }

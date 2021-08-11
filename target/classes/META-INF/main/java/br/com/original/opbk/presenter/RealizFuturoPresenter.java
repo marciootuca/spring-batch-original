@@ -116,7 +116,7 @@ public class RealizFuturoPresenter {
                 .valTrans(Objects.isNull(transPresenter.getValTrans())
                         ? 0
                         : transPresenter.getValTrans())
-                .horTrans(transPresenter.getHorTrans().toString())
+                .horTrans(transPresenter.getHorTrans())
                 .indRegAtivo(REG_ATIVO_S)
                 .codMoedaTrans(COD_MOEDA_BRL)
                 .nomTbelaOrigeTrans(TABELA_ORIGEM)

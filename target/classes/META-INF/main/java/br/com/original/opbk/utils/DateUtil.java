@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 public class DateUtil {
     private DateUtil(){}
     public static LocalDateTime convertStringToLocalDateTime(String date){
-        DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        DateTimeFormatter parser = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm:ss");
         return LocalDate.parse(date, parser).atStartOfDay();
     }
 }

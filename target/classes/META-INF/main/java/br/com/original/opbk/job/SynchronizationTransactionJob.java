@@ -43,13 +43,11 @@ public class SynchronizationTransactionJob {
 	@Value("${DATE_BEGIN_TRANSACTION}")
 	private String dateBegin;
 
+	@Value("${DATE_END_TRANSACTION}")
+	private String dateEnd;
+
 	@Value("${READER_PAGE_SIZE}")
 	private Integer pageSize;
-
-
-	@Autowired
-	private DataSource dataSource;
-
 
 	@Bean
 	@StepScope
@@ -70,10 +68,11 @@ public class SynchronizationTransactionJob {
 	}
 	
 	@Bean
-    Step processTransactionStep(TransactionWriter writer, StepBuilderFactory stepBuilderFactory, ProcessTransactionHistoryStepListener listener){
+    Step processTransactionStep(DataSource dataSource,TransactionWriter writer, StepBuilderFactory stepBuilderFactory,
+								ProcessTransactionHistoryStepListener listener){
 		this.originalLogger.info("Iniciando o passo para iniciar a leitura, o processamento e a escrita.");
 		return stepBuilderFactory.get("processTransactionStep").<TransactionOPBKPresenter, TransactionOPBKPresenter>chunk(chunk)
-				.reader(readerPaging())
+				.reader(readerPaging(dataSource))
 				.writer(writer)
 				.taskExecutor(taskExecutor())
 				.listener(listener)
@@ -81,10 +80,11 @@ public class SynchronizationTransactionJob {
 	}
 
 	@Bean
-	public JdbcPagingItemReader<TransactionOPBKPresenter> readerPaging() {
+	public JdbcPagingItemReader<TransactionOPBKPresenter> readerPaging(DataSource dataSource) {
 		JdbcPagingItemReader<TransactionOPBKPresenter> pagingItemReader = new JdbcPagingItemReader<>();
 		Map<String, Object> parametersInput = new HashMap<>();
 		parametersInput.put("DATE_BEGIN_TRANSACTION",  Timestamp.valueOf(DateUtil.convertStringToLocalDateTime(dateBegin)));
+		parametersInput.put("DATE_END_TRANSACTION",  Timestamp.valueOf(DateUtil.convertStringToLocalDateTime(dateEnd)));
 		pagingItemReader.setDataSource(dataSource);
 		pagingItemReader.setFetchSize(pageSize);
 		pagingItemReader.setPageSize(pageSize);

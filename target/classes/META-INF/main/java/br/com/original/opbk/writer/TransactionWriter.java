@@ -6,13 +6,10 @@ import br.com.original.opbk.presenter.RealizFuturoPresenter;
 import br.com.original.opbk.presenter.RefuseTransactionPresenter;
 import br.com.original.opbk.presenter.TransactionOPBKPresenter;
 import br.com.original.opbk.repository.TransactionRepository;
-import org.springframework.batch.core.configuration.annotation.StepScope;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import com.google.gson.Gson;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -22,6 +19,7 @@ import java.util.concurrent.Executors;
 
 @Component
 public class TransactionWriter implements ItemWriter<TransactionOPBKPresenter> {
+
 
 	@Autowired
 	@OriginalLogger
